@@ -1,4 +1,4 @@
-Scenario,User Action,System Behavior,Copy,Log/Telemetry
+﻿Scenario,User Action,System Behavior,Copy,Log/Telemetry
 Payment fails (card declined),Retry / Update card,"Show modal with reason, offer retry + support link",“Something didn’t go as planned—let’s try again. You can update your card or reach out and we’ll help.”,
 Payment 3D Secure timeout,Retry,Reopen 3DS flow; keep checkout state,“We didn’t receive confirmation in time. Let’s try that one more time.”,
 Stripe webhook not received,None (background),Flag pending status; poll; email receipt when confirmed,“We’re finalizing your purchase. Your access will update shortly.”,
@@ -47,5 +47,3 @@ Provider summary job fails,Retry,"""Show modal with retry + support link""","""W
 No trends data,Click Start Tracking,"""Navigate to Today tab""","""Start tracking to see your trends.""",
 Network error on save,Auto-retry,"""Retry 3x with backoff, then show toast + keep local draft""","""We couldn’t save yet—your entry is safe locally.""",
 Outside chat hours,Start Live Chat,"""Show message capture form""","""We’re offline right now—leave a message and we’ll email you.""",
-
-
