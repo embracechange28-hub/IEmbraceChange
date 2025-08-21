@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NewsletterSubscribe",
+  "type": "object",
+  "required": [
+    "email"
+  ],
+  "properties": {
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "source": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

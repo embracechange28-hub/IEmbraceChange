@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SupportContact",
+  "type": "object",
+  "required": [
+    "name",
+    "email",
+    "subject",
+    "message"
+  ],
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

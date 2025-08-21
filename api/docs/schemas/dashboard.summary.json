@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DashboardSummary",
+  "type": "object",
+  "required": [
+    "user_id",
+    "streak_days",
+    "entries_this_week"
+  ],
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "streak_days": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "entries_this_week": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "active_goal": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "on_track",
+            "off_track",
+            "paused"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

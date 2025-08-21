@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InsightsSummary",
+  "type": "object",
+  "properties": {
+    "range": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "type": "string",
+          "format": "date"
+        },
+        "to": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "additionalProperties": false
+    },
+    "top_symptoms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "avg_severity": {
+            "type": "number"
+          },
+          "days_reported": {
+            "type": "integer"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "correlations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "factor": {
+            "type": "string"
+          },
+          "symptom": {
+            "type": "string"
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "positive",
+              "negative",
+              "none"
+            ]
+          },
+          "strength": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "streaks": {
+      "type": "object",
+      "properties": {
+        "tracking_days": {
+          "type": "integer"
+        },
+        "best_streak": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": false
+    },
+    "suggestions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}

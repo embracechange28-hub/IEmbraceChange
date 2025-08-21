@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ProfileResponse",
+  "type": "object",
+  "required": [
+    "id",
+    "email",
+    "plan"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "first_name": {
+      "type": "string"
+    },
+    "last_name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "menopause_stage": {
+      "type": "string",
+      "enum": [
+        "pre",
+        "perimenopause",
+        "surgical",
+        "post_natural",
+        "post_surgical",
+        "unsure"
+      ]
+    },
+    "plan": {
+      "type": "string",
+      "enum": [
+        "free",
+        "core",
+        "premium"
+      ]
+    },
+    "consents": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

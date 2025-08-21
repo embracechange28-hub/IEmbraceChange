@@ -1,0 +1,524 @@
+openapi: 3.1.0
+info:
+  title: I Embrace Change API
+  version: 1.0.0
+  description: 'OpenAPI for IEC platform (MenoTracker, Inner Compass, Change Atlas).
+    Auth: Bearer JWT (Supabase).'
+servers:
+- url: https://api.iembracechange.com
+  description: Production
+- url: https://staging-api.iembracechange.com
+  description: Staging
+- url: http://localhost:3000
+  description: Local Dev
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Error:
+      $ref: ./schemas/error.json
+    ProfileResponse:
+      $ref: ./schemas/profile.response.json
+    ConsentsUpdate:
+      $ref: ./schemas/consents.update.json
+    CovariatesUpdate:
+      $ref: ./schemas/covariates.update.json
+    DashboardSummary:
+      $ref: ./schemas/dashboard.summary.json
+    MenoTrackerLog:
+      $ref: ./schemas/menotracker.log.json
+    InsightsSummary:
+      $ref: ./schemas/insights.summary.json
+    ProviderSummaryRequest:
+      $ref: ./schemas/provider.summary.request.json
+    ProviderSummaryResponse:
+      $ref: ./schemas/provider.summary.response.json
+    ArticleResponse:
+      $ref: ./schemas/article.response.json
+    TopicsResponse:
+      $ref: ./schemas/inform.topics.response.json
+    CheckoutSessionRequest:
+      $ref: ./schemas/billing.checkoutSession.request.json
+    NewsletterSubscribe:
+      $ref: ./schemas/newsletter.subscribe.json
+    SupportContact:
+      $ref: ./schemas/support.contact.json
+    AnalyticsEvent:
+      $ref: ./schemas/analytics.event.json
+security:
+- bearerAuth: []
+paths:
+  /auth/signup:
+    post:
+      summary: Signup (delegated to Supabase)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+                marketing_opt_in:
+                  type: boolean
+              required:
+              - email
+              - password
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security: []
+  /auth/login:
+    post:
+      summary: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+              required:
+              - email
+              - password
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security: []
+  /me:
+    get:
+      summary: Get current profile
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+    patch:
+      summary: Update profile basics
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                menopause_stage:
+                  type: string
+      responses:
+        '200':
+          description: OK
+    delete:
+      summary: Request account deletion
+      responses:
+        '202':
+          description: Accepted
+  /me/consents:
+    put:
+      summary: Update consents
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsentsUpdate'
+      responses:
+        '200':
+          description: OK
+  /me/covariates:
+    put:
+      summary: Update covariates
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CovariatesUpdate'
+      responses:
+        '200':
+          description: OK
+  /dashboard/summary:
+    get:
+      summary: Dashboard snapshot
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardSummary'
+  /menotracker/logs:
+    post:
+      summary: Create daily log
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MenoTrackerLog'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  entry_id:
+                    type: string
+                    format: uuid
+                  saved:
+                    type: boolean
+    get:
+      summary: List logs
+      parameters:
+      - in: query
+        name: from
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: to
+        schema:
+          type: string
+          format: date
+      responses:
+        '200':
+          description: OK
+  /menotracker/logs/{entry_id}:
+    patch:
+      summary: Update a log
+      parameters:
+      - in: path
+        name: entry_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+    delete:
+      summary: Delete a log
+      parameters:
+      - in: path
+        name: entry_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+  /insights/summary:
+    get:
+      summary: Insights summary
+      parameters:
+      - in: query
+        name: range
+        schema:
+          type: string
+          example: last_30d
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsightsSummary'
+  /insights/report:
+    get:
+      summary: Generate insights report (link)
+      parameters:
+      - in: query
+        name: period
+        schema:
+          type: string
+          example: 2025-07-01..2025-07-31
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - pdf
+          - html
+          default: pdf
+      responses:
+        '200':
+          description: OK
+  /insights/provider-summary:
+    post:
+      summary: Generate provider summary
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProviderSummaryRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderSummaryResponse'
+  /inform/articles:
+    get:
+      summary: List/search articles
+      parameters:
+      - in: query
+        name: q
+        schema:
+          type: string
+      - in: query
+        name: topic
+        schema:
+          type: string
+      - in: query
+        name: sort
+        schema:
+          type: string
+      - in: query
+        name: page
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                  page:
+                    type: integer
+                  page_size:
+                    type: integer
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ArticleResponse'
+  /inform/topics:
+    get:
+      summary: Topics
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TopicsResponse'
+  /inform/articles/{slug}:
+    get:
+      summary: Get article by slug
+      parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArticleResponse'
+  /billing/checkout-session:
+    post:
+      summary: Create Stripe Checkout session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckoutSessionRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session_id:
+                    type: string
+                  checkout_url:
+                    type: string
+                    format: uri
+  /webhooks/stripe:
+    post:
+      summary: Stripe webhook (verify signature)
+      responses:
+        '200':
+          description: OK
+      security: []
+  /checkout/callback:
+    get:
+      summary: Stripe return URL handler
+      parameters:
+      - in: query
+        name: status
+        schema:
+          type: string
+      - in: query
+        name: session_id
+        schema:
+          type: string
+      responses:
+        '302':
+          description: Redirect to app
+  /newsletter/subscribe:
+    post:
+      summary: Subscribe to newsletter
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewsletterSubscribe'
+      responses:
+        '200':
+          description: OK
+  /emails/summary/generate:
+    post:
+      summary: Trigger monthly summary email (server job)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                period_start:
+                  type: string
+                  format: date
+                period_end:
+                  type: string
+                  format: date
+              required:
+              - period_start
+              - period_end
+      responses:
+        '202':
+          description: Accepted
+  /support/contact:
+    post:
+      summary: Create support ticket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupportContact'
+      responses:
+        '201':
+          description: Created
+  /analytics/event:
+    post:
+      summary: Track analytics event (no PHI)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnalyticsEvent'
+      responses:
+        '204':
+          description: No Content
+  /community/ask-expert:
+    post:
+      summary: Submit question to expert (may require Premium)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                question:
+                  type: string
+                context:
+                  type: object
+                privacy:
+                  type: object
+              required:
+              - question
+      responses:
+        '201':
+          description: Created
+  /me/export:
+    post:
+      summary: Request data export
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                formats:
+                  type: array
+                  items:
+                    type: string
+                include:
+                  type: array
+                  items:
+                    type: string
+              required:
+              - formats
+      responses:
+        '202':
+          description: Accepted
+  /search/suggest:
+    get:
+      summary: Typeahead suggestions
+      parameters:
+      - in: query
+        name: q
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK

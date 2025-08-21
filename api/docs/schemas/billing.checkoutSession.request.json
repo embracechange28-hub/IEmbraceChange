@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CheckoutSessionRequest",
+  "type": "object",
+  "required": [
+    "plan",
+    "success_url",
+    "cancel_url"
+  ],
+  "properties": {
+    "plan": {
+      "type": "string",
+      "enum": [
+        "core",
+        "premium"
+      ]
+    },
+    "success_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "cancel_url": {
+      "type": "string",
+      "format": "uri"
+    }
+  },
+  "additionalProperties": false
+}

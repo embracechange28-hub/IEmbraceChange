@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MenoTrackerLog",
+  "type": "object",
+  "required": [
+    "date"
+  ],
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "symptoms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "severity"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "lifestyle": {
+      "type": "object",
+      "properties": {
+        "sleep_hours": {
+          "type": "number"
+        },
+        "sleep_quality": {
+          "type": "string"
+        },
+        "hydration_cups": {
+          "type": "integer"
+        },
+        "movement_minutes": {
+          "type": "integer"
+        },
+        "alcohol_units": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": true
+    },
+    "reflection": {
+      "type": "object",
+      "properties": {
+        "mood": {
+          "type": "string"
+        },
+        "journal": {
+          "type": "string"
+        },
+        "helped": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "hurt": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

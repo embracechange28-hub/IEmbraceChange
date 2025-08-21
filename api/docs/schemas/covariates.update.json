@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CovariatesUpdate",
+  "type": "object",
+  "properties": {
+    "parity": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "age_menarche": {
+      "type": "integer",
+      "minimum": 8,
+      "maximum": 25
+    },
+    "age_final_period": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 10,
+      "maximum": 70
+    },
+    "hrt_use": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "yes",
+            "no",
+            "unknown"
+          ]
+        },
+        "type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "since": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "contraception": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "smoking_status": {
+      "type": "string",
+      "enum": [
+        "current",
+        "former",
+        "never"
+      ]
+    },
+    "alcohol_freq": {
+      "type": "string"
+    },
+    "height_cm": {
+      "type": "number"
+    },
+    "weight_kg": {
+      "type": "number"
+    },
+    "surgical_history": {
+      "type": "object",
+      "properties": {
+        "hysterectomy": {
+          "type": "boolean"
+        },
+        "oophorectomy": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "comorbidities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "medications": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "menopause_stage": {
+      "type": "string",
+      "enum": [
+        "pre",
+        "perimenopause",
+        "surgical",
+        "post_natural",
+        "post_surgical",
+        "unsure"
+      ]
+    },
+    "effective_from": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "additionalProperties": false
+}

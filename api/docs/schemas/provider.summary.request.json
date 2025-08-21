@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ProviderSummaryRequest",
+  "type": "object",
+  "required": [
+    "range",
+    "format"
+  ],
+  "properties": {
+    "range": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "type": "string",
+          "format": "date"
+        },
+        "to": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "additionalProperties": false
+    },
+    "include": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "format": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "html"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

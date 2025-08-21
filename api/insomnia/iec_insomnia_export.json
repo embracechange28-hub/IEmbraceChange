@@ -1,0 +1,96 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2025-08-21T20:38:02.047870Z",
+  "__export_source": "iec-generator",
+  "resources": [
+    {
+      "_id": "wrk_iec",
+      "_type": "workspace",
+      "name": "IEC API",
+      "description": ""
+    },
+    {
+      "_id": "env_iec",
+      "_type": "environment",
+      "parentId": "wrk_iec",
+      "name": "Base Environment",
+      "data": {
+        "baseUrl": "https://api.iembracechange.com",
+        "token": "YOUR_JWT"
+      }
+    },
+    {
+      "_id": "fld_auth",
+      "_type": "request_group",
+      "parentId": "wrk_iec",
+      "name": "Auth"
+    },
+    {
+      "_id": "req_login",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Login",
+      "method": "POST",
+      "url": "{{ baseUrl }}/auth/login",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\"email\": \"alison@example.com\", \"password\": \"G00dP@ssword!\"}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ]
+    },
+    {
+      "_id": "fld_profile",
+      "_type": "request_group",
+      "parentId": "wrk_iec",
+      "name": "Profile"
+    },
+    {
+      "_id": "req_me",
+      "_type": "request",
+      "parentId": "fld_profile",
+      "name": "Get Me",
+      "method": "GET",
+      "url": "{{ baseUrl }}/me",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ token }}"
+        }
+      ]
+    },
+    {
+      "_id": "fld_tracker",
+      "_type": "request_group",
+      "parentId": "wrk_iec",
+      "name": "MenoTracker"
+    },
+    {
+      "_id": "req_log",
+      "_type": "request",
+      "parentId": "fld_tracker",
+      "name": "Create Log",
+      "method": "POST",
+      "url": "{{ baseUrl }}/menotracker/logs",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\"date\": \"2025-08-20\", \"symptoms\": [{\"name\": \"Hot Flashes\", \"severity\": 3}]}"
+      },
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ token }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ]
+    }
+  ]
+}
