@@ -41,11 +41,11 @@ Email bounce/blocked,Update email,Banner asking to confirm/update email,“We co
 Country restrictions (payments),Choose method,Show supported methods; alternative options,“Payments in your region may need a different method. Here are your options.”,
 App update available,Refresh,Non-blocking toast; “Reload” CTA,“A gentle refresh will bring you the latest improvements.”,
 Long-running report generation,Wait / Notify,Show progress; offer email when ready,“We’re preparing your insights. We’ll let you know as soon as they’re ready.”,
-,,,,
 Invalid login,Retry,"""Show inline error; keep inputs except password""","""Invalid email or password.""",
 Premium feature locked,Click Upgrade,Open Stripe checkout; return to previous route on success,Unlock Inner Compass with Premium.,
 Provider summary job fails,Retry,"""Show modal with retry + support link""","""We couldn’t generate your summary—let’s try again.""",
 No trends data,Click Start Tracking,"""Navigate to Today tab""","""Start tracking to see your trends.""",
 Network error on save,Auto-retry,"""Retry 3x with backoff, then show toast + keep local draft""","""We couldn’t save yet—your entry is safe locally.""",
 Outside chat hours,Start Live Chat,"""Show message capture form""","""We’re offline right now—leave a message and we’ll email you.""",
+
 
