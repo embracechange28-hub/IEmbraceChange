@@ -1,0 +1,209 @@
+{
+  "info": {
+    "name": "IEC API",
+    "_postman_id": "25a25371-8c9f-4e90-a79c-8d5bce4803e8",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.iembracechange.com"
+    },
+    {
+      "key": "token",
+      "value": "{{YOUR_JWT}}",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"alison@example.com\",\n  \"password\": \"G00dP@ssword!\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Get Me",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/me"
+          }
+        },
+        {
+          "name": "Update Consents",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/me/consents",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accept_terms\": true,\n  \"is_of_age\": true,\n  \"policy_version\": \"2025-08-12\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "MenoTracker",
+      "item": [
+        {
+          "name": "Create Log",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/menotracker/logs",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"date\": \"2025-08-20\",\n  \"symptoms\": [\n    {\n      \"name\": \"Hot Flashes\",\n      \"severity\": 3\n    }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "List Logs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/menotracker/logs?from=2025-08-01&to=2025-08-20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "menotracker",
+                "logs"
+              ],
+              "query": [
+                {
+                  "key": "from",
+                  "value": "2025-08-01"
+                },
+                {
+                  "key": "to",
+                  "value": "2025-08-20"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Insights",
+      "item": [
+        {
+          "name": "Summary",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/insights/summary?range=last_30d"
+          }
+        },
+        {
+          "name": "Provider Summary",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/insights/provider-summary",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"range\": {\n    \"from\": \"2025-07-01\",\n    \"to\": \"2025-07-31\"\n  },\n  \"format\": \"pdf\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Articles",
+      "item": [
+        {
+          "name": "Search Articles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/inform/articles?q=hot"
+          }
+        },
+        {
+          "name": "Topics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/inform/topics"
+          }
+        }
+      ]
+    }
+  ]
+}
