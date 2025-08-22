@@ -35,9 +35,11 @@ flowchart LR
 
 ## 2. Signup & Onboarding Flow
 Covers Step 1–4 with guards for authentication and consent.
+%% After subsequent logins (no ?redirect=), default landing is /dashboard.
 
 ```mermaid
 flowchart TD
+  %% Onboarding (first run)
   A["/signup (Step 1)\nCreate Account"] --> B["/onboarding/step2\nPassword + Menopause Stage"]
   B --> C["/onboarding/step3\nPrivacy & Consents (required + optional)"]
   C --> D["/onboarding/step4\nChoose Plan (Free/Core/Premium)"]
@@ -46,30 +48,26 @@ flowchart TD
   D -->|Core/Premium| F["Stripe Checkout"]
   F --> G["/checkout/callback\nVerify via webhook → plan active"]
 
-  E --> H["/menotracker"]
-  G --> H["/menotracker"]
+  E --> H["/menotracker (first run)"]
+  G --> H
 
-“After subsequent logins (no ?redirect=), default landing is /dashboard.”
-
-%% Replace the tail of your onboarding flow (after callback)
-E["Activate plan=free"] --> H["/menotracker (first run)"]
-G["/checkout/callback → plan active"] --> H
-%% Subsequent logins:
-SignInSuccess["/signin success"] --> D1{"has redirect?"}
-D1 -- no --> D2["/dashboard (default)"]
-D1 -- yes --> D3["redirect target"]
-
+  %% Subsequent logins (no ?redirect= → /dashboard)
+  %% (separate branch so we don't redefine nodes above)
+  SignInSuccess["/signin success"] --> RD1{"has ?redirect= ?"}
+  RD1 -- "no" --> D2["/dashboard (default)"]
+  RD1 -- "yes" --> D3["redirect target"]
 
   %% Guards / Redirects
   X["Unauthenticated user"] -->|visits /menotracker| R["Redirect → /signin?redirect=/menotracker"]
   Y["Missing stage/consents"] -->|visits app areas| O["Redirect → /onboarding"]
 
+  %% Classes
   classDef step fill:#D7F0F7,stroke:#333,color:#000;
-  classDef action fill:#A8D5BA,stroke:#333,color:#000;
   classDef guard fill:#F6B7C1,stroke:#333,color:#000;
 
-  class A,B,C,D,E,F,G,H step;
-  class X,Y,R,O guard,step;
+  class A,B,C,D,E,F,G,H,SignInSuccess,D2,D3 step;
+  class X,Y,R,O,RD1 guard;
+
 ```
 
 ***
@@ -240,13 +238,12 @@ flowchart LR
 flowchart LR
   MT[(MenoTracker Logs)] --> IC[Inner Compass Engine]
   CV[(Profile Covariates)] --> IC
-  IC --> TR[Trends & Correlations]
-  IC --> PS[[Provider Summary (PDF/Print)]]
+  IC --> TR[Trends and Correlations]
+  IC --> PS[[Provider Summary <br/>(PDF/Print)]]
   TR --> CA[Change Atlas Links]
   PS --> U[User / Clinician]
 
 ```
-
 
 ***
 
