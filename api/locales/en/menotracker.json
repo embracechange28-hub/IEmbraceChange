@@ -3,68 +3,54 @@
     "title": "MenoTracker",
     "subtitle": "Track your symptoms, discover patterns, and take control of your menopause journey.",
     "today": {
-      "welcome": {
-        "title": "Welcome back!"
-      },
-      "cta": {
-        "primary": "Start Today’s Tracking"
-      },
-      "card": {
+      "welcome": "Welcome back!",
+      "ctaStart": "Start Today’s Tracking",
+      "cards": {
         "physical": {
           "title": "Physical Symptoms",
-          "desc": "Track your physical symptoms today"
+          "description": "Track your physical symptoms today",
+          "actionAdd": "+ Add"
         },
         "emotional": {
           "title": "Emotion & Cognitive",
-          "desc": "Track your emotional and cognitive wellbeing"
+          "description": "Track your emotional and cognitive wellbeing",
+          "actionAdd": "+ Add"
         },
         "lifestyle": {
           "title": "Lifestyle Factors",
-          "desc": "Track lifestyle factors that may impact symptoms"
+          "description": "Track lifestyle factors that may impact symptoms",
+          "actionAdd": "+ Add"
         }
       },
-      "action": {
-        "add": "+ Add",
-        "addReflection": "Add Reflection"
-      },
+      "addReflection": "Add Reflection",
       "status": {
         "notTracked": "Not tracked"
       }
     },
     "trends": {
       "title": "Your Symptom Trends",
-      "subtitle": "Discover patterns in your menopause journey",
-      "empty": {
-        "title": "Start tracking to see trends",
-        "subtitle": "Track your symptoms for a few days to see meaningful patterns and insights.",
-        "cta": "Start Tracking Today"
-      }
+      "description": "Discover patterns in your menopause journey",
+      "emptyTitle": "Start tracking to see trends",
+      "emptySubtitle": "Track your symptoms for a few days to see meaningful patterns and insights.",
+      "ctaStart": "Start Tracking Today"
     },
     "library": {
       "title": "Resource Library",
-      "subtitle": "Educational resources tailored to your journey",
-      "card": {
-        "cta": {
-          "readMore": "Read More"
-        }
-      }
+      "description": "Educational resources tailored to your journey",
+      "cardCta": "Read More"
     },
-    "prof": {
+    "professionals": {
       "title": "Clinical Evidence & Research",
-      "subtitle": "Evidence-based information for you and your healthcare provider",
-      "summary": {
-        "title": "Healthcare Provider Summary",
-        "desc": "Generate a comprehensive summary of your symptoms and patterns to share with your healthcare provider.",
-        "cta": "Generate Summary"
-      },
-      "research": {
-        "title": "Latest Research",
-        "cta": "View Research"
-      },
-      "treatments": {
-        "title": "Treatment Options",
-        "cta": "Learn More"
-      }
+      "description": "Evidence-based information for you and your healthcare provider",
+      "summaryTitle": "Healthcare Provider Summary",
+      "summaryDescription": "Generate a comprehensive summary of your symptoms and patterns to share with your healthcare provider.",
+      "summaryCta": "Generate Summary",
+      "researchTitle": "Latest Research",
+      "researchDescription": "Stay updated with the latest menopause research and clinical findings.",
+      "researchCta": "View Research",
+      "treatmentsTitle": "Treatment Options",
+      "treatmentsDescription": "Explore evidence-based treatment options and their effectiveness.",
+      "treatmentsCta": "Learn More"
     }
   }
 }
