@@ -239,9 +239,9 @@ flowchart LR
   MT[(MenoTracker Logs)] --> IC[Inner Compass Engine]
   CV[(Profile Covariates)] --> IC
   IC --> TR[Trends and Correlations]
-  IC --> PS[[Provider Summary\n (PDF/Print)]]
+  IC --> PSSUM[Provider Summary PDF or Print]
   TR --> CA[Change Atlas Links]
-  PS --> U[User / Clinician]
+  PSSUM --> UC[User or Clinician]
 
 ```
 
