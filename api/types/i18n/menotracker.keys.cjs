@@ -1,4 +1,4 @@
-export const menotrackerKeys = [
+const menotrackerKeys = [
   "menotracker.title",
   "menotracker.subtitle",
   "menotracker.today.welcome",
@@ -33,10 +33,5 @@ export const menotrackerKeys = [
   "menotracker.professionals.treatmentsTitle",
   "menotracker.professionals.treatmentsDescription",
   "menotracker.professionals.treatmentsCta"
-] as const;
-
-export type MenotrackerKey = typeof menotrackerKeys[number];
-
-export function isMenotrackerKey(k: string): k is MenotrackerKey {
-  return (menotrackerKeys as readonly string[]).includes(k);
-}
+];
+module.exports = { menotrackerKeys };
