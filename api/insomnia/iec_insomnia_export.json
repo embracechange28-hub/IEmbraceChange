@@ -1,96 +1,210 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2025-08-21T20:38:02.047870Z",
-  "__export_source": "iec-generator",
+  "__export_date": "2025-08-22T12:20:50Z",
+  "__export_source": "iec-openapi-generator",
   "resources": [
     {
-      "_id": "wrk_iec",
+      "_id": "wrk_dbe774c0ee7e4",
       "_type": "workspace",
-      "name": "IEC API",
-      "description": ""
+      "name": "I Embrace Change API",
+      "description": "Insomnia collection generated from IEC spec"
     },
     {
-      "_id": "env_iec",
+      "_id": "env_61682ed062834",
       "_type": "environment",
-      "parentId": "wrk_iec",
+      "parentId": "wrk_dbe774c0ee7e4",
       "name": "Base Environment",
       "data": {
         "baseUrl": "https://api.iembracechange.com",
-        "token": "YOUR_JWT"
+        "access_token": ""
       }
     },
     {
-      "_id": "fld_auth",
-      "_type": "request_group",
-      "parentId": "wrk_iec",
-      "name": "Auth"
-    },
-    {
-      "_id": "req_login",
+      "_id": "req_39631ed6345b4",
       "_type": "request",
-      "parentId": "fld_auth",
+      "parentId": "wrk_dbe774c0ee7e4",
       "name": "Login",
       "method": "POST",
-      "url": "{{ baseUrl }}/auth/login",
-      "body": {
-        "mimeType": "application/json",
-        "text": "{\"email\": \"alison@example.com\", \"password\": \"G00dP@ssword!\"}"
-      },
+      "url": "{{ _.baseUrl }}/auth/login",
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json"
         }
-      ]
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"alison@example.com\",\n  \"password\": \"G00dP@ssword!\"\n}"
+      }
     },
     {
-      "_id": "fld_profile",
-      "_type": "request_group",
-      "parentId": "wrk_iec",
-      "name": "Profile"
-    },
-    {
-      "_id": "req_me",
+      "_id": "req_ea28c9bc27864",
       "_type": "request",
-      "parentId": "fld_profile",
-      "name": "Get Me",
+      "parentId": "wrk_dbe774c0ee7e4",
+      "name": "Dashboard summary",
       "method": "GET",
-      "url": "{{ baseUrl }}/me",
+      "url": "{{ _.baseUrl }}/dashboard/summary",
       "headers": [
         {
           "name": "Authorization",
-          "value": "Bearer {{ token }}"
+          "value": "Bearer {{ _.access_token }}"
         }
       ]
     },
     {
-      "_id": "fld_tracker",
-      "_type": "request_group",
-      "parentId": "wrk_iec",
-      "name": "MenoTracker"
-    },
-    {
-      "_id": "req_log",
+      "_id": "req_c1cf1460ec3d4",
       "_type": "request",
-      "parentId": "fld_tracker",
-      "name": "Create Log",
-      "method": "POST",
-      "url": "{{ baseUrl }}/menotracker/logs",
-      "body": {
-        "mimeType": "application/json",
-        "text": "{\"date\": \"2025-08-20\", \"symptoms\": [{\"name\": \"Hot Flashes\", \"severity\": 3}]}"
-      },
+      "parentId": "wrk_dbe774c0ee7e4",
+      "name": "Upsert covariates",
+      "method": "PUT",
+      "url": "{{ _.baseUrl }}/me/covariates",
       "headers": [
         {
-          "name": "Authorization",
-          "value": "Bearer {{ token }}"
+          "name": "Content-Type",
+          "value": "application/json"
         },
         {
+          "name": "Authorization",
+          "value": "Bearer {{ _.access_token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"parity\": 2,\n  \"age_menarche\": 12,\n  \"smoking_status\": \"never\",\n  \"effective_from\": \"2025-08-20\"\n}"
+      }
+    },
+    {
+      "_id": "req_fe8a99fd891e4",
+      "_type": "request",
+      "parentId": "wrk_dbe774c0ee7e4",
+      "name": "Provider summary",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/insights/provider-summary",
+      "headers": [
+        {
           "name": "Content-Type",
           "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.access_token }}"
         }
-      ]
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"range\": {\n    \"from\": \"2025-07-01\",\n    \"to\": \"2025-07-31\"\n  },\n  \"format\": \"pdf\"\n}"
+      }
+    },
+    {
+      "_id": "req_4f2f953465984",
+      "_type": "request",
+      "parentId": "wrk_dbe774c0ee7e4",
+      "name": "Analytics: dashboard_viewed",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/analytics/event",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.access_token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"event\": \"dashboard_viewed\",\n  \"timestamp\": \"2025-08-22T12:20:50Z\",\n  \"properties\": {\n    \"source\": \"insomnia\"\n  }\n}"
+      }
+    },
+    {
+      "_id": "req_59d381575f854",
+      "_type": "request",
+      "parentId": "wrk_dbe774c0ee7e4",
+      "name": "Analytics: quick_action_clicked",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/analytics/event",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.access_token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"event\": \"quick_action_clicked\",\n  \"timestamp\": \"2025-08-22T12:20:50Z\",\n  \"properties\": {\n    \"label\": \"Daily Check-in\"\n  }\n}"
+      }
+    },
+    {
+      "_id": "req_be8847ab729c4",
+      "_type": "request",
+      "parentId": "wrk_dbe774c0ee7e4",
+      "name": "Analytics: provider_summary_generated",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/analytics/event",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.access_token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"event\": \"provider_summary_generated\",\n  \"timestamp\": \"2025-08-22T12:20:50Z\",\n  \"properties\": {\n    \"format\": \"pdf\",\n    \"days_in_range\": 31\n  }\n}"
+      }
+    },
+    {
+      "_id": "req_fdc1900d49a74",
+      "_type": "request",
+      "parentId": "wrk_dbe774c0ee7e4",
+      "name": "Checkout session",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/billing/checkout-session",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.access_token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"plan\": \"core\",\n  \"success_url\": \"https://app.iembracechange.com/checkout/callback?status=success\",\n  \"cancel_url\": \"https://app.iembracechange.com/checkout/callback?status=cancel\"\n}"
+      }
+    },
+    {
+      "_id": "req_eb70f3f7430c4",
+      "_type": "request",
+      "parentId": "wrk_dbe774c0ee7e4",
+      "name": "Support contact",
+      "method": "POST",
+      "url": "{{ _.baseUrl }}/support/contact",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.access_token }}"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Alison\",\n  \"email\": \"alison@example.com\",\n  \"subject\": \"Help\",\n  \"message\": \"Issue\",\n  \"source\": \"support_page\"\n}"
+      }
     }
   ]
 }
