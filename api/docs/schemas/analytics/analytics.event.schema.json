@@ -1,0 +1,12 @@
+{
+  "$id": "https://iembracechange.com/schemas/analytics.event.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["event", "timestamp", "properties"],
+  "properties": {
+    "event": { "type": "string", "minLength": 1 },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "properties": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": false
+}
