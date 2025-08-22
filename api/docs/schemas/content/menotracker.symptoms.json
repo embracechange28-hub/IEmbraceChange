@@ -1,0 +1,16 @@
+{
+  "$id": "https://iembracechange.com/schemas/content/menotracker.symptoms.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["key", "label", "group"],
+    "properties": {
+      "key": { "type": "string" },
+      "label": { "type": "string" },
+      "group": { "type": "string", "enum": ["physical", "emotional"] },
+      "description": { "type": "string" }
+    },
+    "additionalProperties": false
+  }
+}
