@@ -1,7 +1,7 @@
 {
   "info": {
-    "name": "IEC API",
-    "_postman_id": "25a25371-8c9f-4e90-a79c-8d5bce4803e8",
+    "_postman_id": "6d488308-6366-4790-9aa2-dfad5f298041",
+    "name": "I Embrace Change API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -10,200 +10,808 @@
       "value": "https://api.iembracechange.com"
     },
     {
-      "key": "token",
-      "value": "{{YOUR_JWT}}",
-      "type": "string"
+      "key": "access_token",
+      "value": ""
+    },
+    {
+      "key": "entry_id",
+      "value": "e1a9d5f2-0b6b-4e2d-8a1a-2d7d9c1130ab"
     }
   ],
   "item": [
     {
-      "name": "Auth",
-      "item": [
-        {
-          "name": "Login",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": "{{baseUrl}}/auth/login",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"alison@example.com\",\n  \"password\": \"G00dP@ssword!\"\n}"
-            }
+      "name": "Sign up",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
           }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/auth/signup",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "auth",
+            "signup"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"first_name\": \"Alison\",\n  \"last_name\": \"Copoc\",\n  \"email\": \"alison@example.com\",\n  \"password\": \"G00dP@ssword!\",\n  \"marketing_opt_in\": false\n}"
         }
-      ]
+      }
     },
     {
-      "name": "Profile",
-      "item": [
-        {
-          "name": "Get Me",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": "{{baseUrl}}/me"
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
           }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/auth/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
         },
-        {
-          "name": "Update Consents",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": "{{baseUrl}}/me/consents",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"accept_terms\": true,\n  \"is_of_age\": true,\n  \"policy_version\": \"2025-08-12\"\n}"
-            }
-          }
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"alison@example.com\",\n  \"password\": \"G00dP@ssword!\"\n}"
         }
-      ]
+      }
     },
     {
-      "name": "MenoTracker",
-      "item": [
-        {
-          "name": "Create Log",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": "{{baseUrl}}/menotracker/logs",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"date\": \"2025-08-20\",\n  \"symptoms\": [\n    {\n      \"name\": \"Hot Flashes\",\n      \"severity\": 3\n    }\n  ]\n}"
-            }
+      "name": "Get profile",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
           }
-        },
-        {
-          "name": "List Logs",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/menotracker/logs?from=2025-08-01&to=2025-08-20",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "menotracker",
-                "logs"
-              ],
-              "query": [
-                {
-                  "key": "from",
-                  "value": "2025-08-01"
-                },
-                {
-                  "key": "to",
-                  "value": "2025-08-20"
-                }
-              ]
-            }
-          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/me",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "me"
+          ]
         }
-      ]
+      }
     },
     {
-      "name": "Insights",
-      "item": [
-        {
-          "name": "Summary",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": "{{baseUrl}}/insights/summary?range=last_30d"
+      "name": "Update consents",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
           }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/me/consents",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "me",
+            "consents"
+          ]
         },
-        {
-          "name": "Provider Summary",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": "{{baseUrl}}/insights/provider-summary",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"range\": {\n    \"from\": \"2025-07-01\",\n    \"to\": \"2025-07-31\"\n  },\n  \"format\": \"pdf\"\n}"
-            }
-          }
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"is_of_age\": true,\n  \"accept_terms\": true,\n  \"medical_disclaimer_ack\": true,\n  \"health_processing\": true,\n  \"deidentified_improvement\": true,\n  \"share_anon_trends\": false,\n  \"research_partnerships\": false,\n  \"marketing_updates\": false,\n  \"policy_version\": \"2025-08-12\"\n}"
         }
-      ]
+      }
     },
     {
-      "name": "Articles",
-      "item": [
-        {
-          "name": "Search Articles",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": "{{baseUrl}}/inform/articles?q=hot"
+      "name": "Upsert covariates",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
           }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/me/covariates",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "me",
+            "covariates"
+          ]
         },
-        {
-          "name": "Topics",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": "{{baseUrl}}/inform/topics"
-          }
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"parity\": 2,\n  \"age_menarche\": 12,\n  \"hrt_use\": {\n    \"status\": \"yes\",\n    \"type\": \"combined\",\n    \"since\": \"2024-11-01\"\n  },\n  \"smoking_status\": \"never\",\n  \"effective_from\": \"2025-08-20\"\n}"
         }
-      ]
+      }
+    },
+    {
+      "name": "Dashboard summary",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/dashboard/summary",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "dashboard",
+            "summary"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create log",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/menotracker/logs",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "menotracker",
+            "logs"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"date\": \"2025-08-20\",\n  \"symptoms\": [\n    {\n      \"name\": \"Hot Flashes\",\n      \"severity\": 3\n    }\n  ],\n  \"lifestyle\": {\n    \"sleep_hours\": 6.0,\n    \"movement_minutes\": 30\n  },\n  \"reflection\": {\n    \"mood\": \"anxious\"\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "List logs",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/menotracker/logs?from=2025-08-01&to=2025-08-20",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "menotracker",
+            "logs?from=2025-08-01&to=2025-08-20"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Update log",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/menotracker/logs/{{entry_id}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "menotracker",
+            "logs",
+            "{{entry_id}}"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"reflection\": {\n    \"mood\": \"calmer\"\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "Delete log",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/menotracker/logs/{{entry_id}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "menotracker",
+            "logs",
+            "{{entry_id}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Insights summary",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/insights/summary?range=last_30d",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "insights",
+            "summary?range=last_30d"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Insights report",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/insights/report?period=2025-07-01..2025-07-31&format=pdf",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "insights",
+            "report?period=2025-07-01..2025-07-31&format=pdf"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Provider summary",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/insights/provider-summary",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "insights",
+            "provider-summary"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"range\": {\n    \"from\": \"2025-07-01\",\n    \"to\": \"2025-07-31\"\n  },\n  \"include\": [\n    \"top_symptoms\"\n  ],\n  \"format\": \"pdf\"\n}"
+        }
+      }
+    },
+    {
+      "name": "List articles",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/inform/articles?q=hot&topic=sleep&page=1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "inform",
+            "articles?q=hot&topic=sleep&page=1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "List topics",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/inform/topics",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "inform",
+            "topics"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get article",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/inform/articles/understanding-hot-flashes",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "inform",
+            "articles",
+            "understanding-hot-flashes"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Checkout session",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/billing/checkout-session",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "billing",
+            "checkout-session"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"plan\": \"core\",\n  \"success_url\": \"https://app.iembracechange.com/checkout/callback?status=success\",\n  \"cancel_url\": \"https://app.iembracechange.com/checkout/callback?status=cancel\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Checkout callback",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/checkout/callback?status=success&session_id=cs_test_a1b2c3",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "checkout",
+            "callback?status=success&session_id=cs_test_a1b2c3"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Stripe webhook (test)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/webhooks/stripe",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "webhooks",
+            "stripe"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"type\": \"checkout.session.completed\",\n  \"data\": {\n    \"object\": {\n      \"id\": \"cs_test\"\n    }\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "Newsletter subscribe",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/newsletter/subscribe",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "newsletter",
+            "subscribe"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"alison@example.com\",\n  \"source\": \"inform_page_cta\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Monthly summary generate",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/emails/summary/generate",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "emails",
+            "summary",
+            "generate"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"period_start\": \"2025-07-01\",\n  \"period_end\": \"2025-07-31\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Support contact",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/support/contact",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "support",
+            "contact"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Alison Copoc\",\n  \"email\": \"alison@example.com\",\n  \"subject\": \"Issue\",\n  \"message\": \"Help\",\n  \"source\": \"support_page\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Analytics: dashboard_viewed",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/analytics/event",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "analytics",
+            "event"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"event\": \"dashboard_viewed\",\n  \"timestamp\": \"2025-08-22T12:20:50Z\",\n  \"properties\": {\n    \"source\": \"app\"\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "Analytics: quick_action_clicked",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/analytics/event",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "analytics",
+            "event"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"event\": \"quick_action_clicked\",\n  \"timestamp\": \"2025-08-22T12:20:50Z\",\n  \"properties\": {\n    \"label\": \"Daily Check-in\"\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "Analytics: inner_compass_locked_view",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/analytics/event",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "analytics",
+            "event"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"event\": \"inner_compass_locked_view\",\n  \"timestamp\": \"2025-08-22T12:20:50Z\",\n  \"properties\": {}\n}"
+        }
+      }
+    },
+    {
+      "name": "Analytics: inner_compass_upgrade_clicked",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/analytics/event",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "analytics",
+            "event"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"event\": \"inner_compass_upgrade_clicked\",\n  \"timestamp\": \"2025-08-22T12:20:50Z\",\n  \"properties\": {}\n}"
+        }
+      }
+    },
+    {
+      "name": "Analytics: provider_summary_generated",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/analytics/event",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "analytics",
+            "event"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"event\": \"provider_summary_generated\",\n  \"timestamp\": \"2025-08-22T12:20:50Z\",\n  \"properties\": {\n    \"format\": \"pdf\",\n    \"days_in_range\": 31\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "Ask an expert",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/community/ask-expert",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "community",
+            "ask-expert"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"question\": \"What helps with hot flashes?\",\n  \"privacy\": {\n    \"anonymous_handle\": true\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "Data export",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/me/export",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "me",
+            "export"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"formats\": [\n    \"json\",\n    \"csv\"\n  ],\n  \"include\": [\n    \"logs\",\n    \"insights\"\n  ]\n}"
+        }
+      }
+    },
+    {
+      "name": "Suggest (public)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/search/suggest?q=hot",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "search",
+            "suggest?q=hot"
+          ]
+        }
+      }
     }
   ]
 }
