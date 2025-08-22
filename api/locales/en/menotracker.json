@@ -1,0 +1,70 @@
+{
+  "menotracker": {
+    "title": "MenoTracker",
+    "subtitle": "Track your symptoms, discover patterns, and take control of your menopause journey.",
+    "today": {
+      "welcome": {
+        "title": "Welcome back!"
+      },
+      "cta": {
+        "primary": "Start Today’s Tracking"
+      },
+      "card": {
+        "physical": {
+          "title": "Physical Symptoms",
+          "desc": "Track your physical symptoms today"
+        },
+        "emotional": {
+          "title": "Emotion & Cognitive",
+          "desc": "Track your emotional and cognitive wellbeing"
+        },
+        "lifestyle": {
+          "title": "Lifestyle Factors",
+          "desc": "Track lifestyle factors that may impact symptoms"
+        }
+      },
+      "action": {
+        "add": "+ Add",
+        "addReflection": "Add Reflection"
+      },
+      "status": {
+        "notTracked": "Not tracked"
+      }
+    },
+    "trends": {
+      "title": "Your Symptom Trends",
+      "subtitle": "Discover patterns in your menopause journey",
+      "empty": {
+        "title": "Start tracking to see trends",
+        "subtitle": "Track your symptoms for a few days to see meaningful patterns and insights.",
+        "cta": "Start Tracking Today"
+      }
+    },
+    "library": {
+      "title": "Resource Library",
+      "subtitle": "Educational resources tailored to your journey",
+      "card": {
+        "cta": {
+          "readMore": "Read More"
+        }
+      }
+    },
+    "prof": {
+      "title": "Clinical Evidence & Research",
+      "subtitle": "Evidence-based information for you and your healthcare provider",
+      "summary": {
+        "title": "Healthcare Provider Summary",
+        "desc": "Generate a comprehensive summary of your symptoms and patterns to share with your healthcare provider.",
+        "cta": "Generate Summary"
+      },
+      "research": {
+        "title": "Latest Research",
+        "cta": "View Research"
+      },
+      "treatments": {
+        "title": "Treatment Options",
+        "cta": "Learn More"
+      }
+    }
+  }
+}
