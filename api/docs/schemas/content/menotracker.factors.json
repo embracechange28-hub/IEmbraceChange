@@ -1,0 +1,16 @@
+{
+  "$id": "https://iembracechange.com/schemas/content/menotracker.factors.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["key", "label", "input"],
+    "properties": {
+      "key": { "type": "string" },
+      "label": { "type": "string" },
+      "input": { "type": "string", "enum": ["scale_0_10", "scale_1_5", "minutes", "hours", "cups", "boolean", "text"] },
+      "description": { "type": "string" }
+    },
+    "additionalProperties": false
+  }
+}
