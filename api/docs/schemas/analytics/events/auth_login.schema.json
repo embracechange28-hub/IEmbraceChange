@@ -1,0 +1,21 @@
+{
+  "$id": "https://iembracechange.com/schemas/analytics/events/auth_login.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "allOf": [
+    { "$ref": "../analytics.event.schema.json" },
+    {
+      "properties": {
+        "event": { "const": "auth_login" },
+        "properties": {
+          "type": "object",
+          "required": ["success", "landing"],
+          "properties": {
+            "success": { "type": "boolean" },
+            "landing": { "type": "string", "enum": ["redirect", "menotracker", "dashboard"] }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  ]
+}
