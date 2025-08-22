@@ -49,6 +49,17 @@ flowchart TD
   E --> H["/menotracker"]
   G --> H["/menotracker"]
 
+“After subsequent logins (no ?redirect=), default landing is /dashboard.”
+
+%% Replace the tail of your onboarding flow (after callback)
+E["Activate plan=free"] --> H["/menotracker (first run)"]
+G["/checkout/callback → plan active"] --> H
+%% Subsequent logins:
+SignInSuccess["/signin success"] --> D1{"has redirect?"}
+D1 -- no --> D2["/dashboard (default)"]
+D1 -- yes --> D3["redirect target"]
+
+
   %% Guards / Redirects
   X["Unauthenticated user"] -->|visits /menotracker| R["Redirect → /signin?redirect=/menotracker"]
   Y["Missing stage/consents"] -->|visits app areas| O["Redirect → /onboarding"]
@@ -73,26 +84,43 @@ stateDiagram-v2
   Home --> Inform
   Home --> Community
   Home --> MenoTracker
+  Home --> InnerCompass
+  Home --> Dashboard
 
   state if_auth <<choice>>
   state if_consents <<choice>>
+  state if_premium <<choice>>
+  state if_redirect <<choice>>
 
+  %% --- Auth + Redirect guard (applies to protected routes) ---
   MenoTracker --> if_auth
+  InnerCompass --> if_auth
+  Dashboard --> if_auth
   if_auth --> SignIn: not authenticated
   if_auth --> if_consents: authenticated
 
+  %% --- Consent guard for MenoTracker ---
   if_consents --> Onboarding: missing stage/required consents
   if_consents --> MenoToday: OK
 
-  SignIn --> MenoTracker: redirect after login
-  Onboarding --> MenoTracker: after completion
+  %% --- Premium gating for Inner Compass ---
+  InnerCompass --> if_premium
+  if_premium --> LockScreen: plan != premium
+  if_premium --> ICFull: plan == premium
 
+  %% --- Post-login default route ---
+  SignIn --> if_redirect: login success
+  if_redirect --> Dashboard: no redirect param
+  if_redirect --> RequestedRoute: has ?redirect=
+
+  %% --- MenoTracker internal tabs ---
   state MenoToday {
     [*] --> Today
     Today --> Trends
     Today --> Library
     Today --> Professionals
   }
+
 ```
 
 ***
@@ -131,26 +159,37 @@ graph TD
   classDef global fill:#CFA9A0,stroke:#333,color:#000
   classDef content fill:#D8DED3,stroke:#333,color:#000
 
+  %% Pages
   H[Header] --> Home[Homepage]
   H --> About[About Page]
   H --> Inform[Inform Hub]
   H --> Community[Community]
   H --> Tracker[MenoTracker]
+  H --> Dashboard[Dashboard]
+  H --> IC[Inner Compass]
 
   F[Footer] --> Home
   F --> About
   F --> Inform
   F --> Community
   F --> Tracker
+  F --> Dashboard
+  F --> IC
 
+  %% Shared components
   subgraph Shared ["Shared Components"]
     HB[Hero Banner]
     CTA[Call to Action Block]
     FG[Feature Grid]
     TC[Testimonial Card]
     Form[Form with Validations]
+    MC[Metric Card]
+    QA[Quick Action Card]
+    LS[Lock Screen Premium]
+    SP[Summary Preview]
   end
 
+  %% Usage
   Home --> HB
   Home --> CTA
   Home --> FG
@@ -163,13 +202,55 @@ graph TD
   Community --> FG
   Tracker --> Form
 
+  %% New: Dashboard + Inner Compass mappings
+  Dashboard --> MC
+  Dashboard --> QA
+  IC --> LS
+  IC --> SP
+
   class H,F global
-  class HB,CTA,FG,TC,Form content
+  class HB,CTA,FG,TC,Form,MC,QA,LS,SP content
 ```
 
 ***
 
-## 6. Legend (Component Map)
+## 6. Webhooks & Data Flows
+
+6.1 Stripe → Webhook → Supabase Plan Sync
+
+```mermaid
+
+flowchart LR
+  U[User] -->|Upgrade/Checkout| App[App]
+  App -. opens .-> CO[Stripe Checkout]
+  CO -- events --> WH[Webhook Handler /webhooks/stripe]
+  WH -->|verify sig + map price → plan| DB[(Supabase profiles.plan)]
+  DB --> App
+  App --> CRM[CRM/Email]:::sidecar
+  classDef sidecar fill:#EFEFEF,stroke:#999,color:#111
+
+```
+
+***
+
+6.2 Data & Insights Pipeline (Map-and-Mirror)
+
+```mermaid
+
+flowchart LR
+  MT[(MenoTracker Logs)] --> IC[Inner Compass Engine]
+  CV[(Profile Covariates)] --> IC
+  IC --> TR[Trends & Correlations]
+  IC --> PS[[Provider Summary (PDF/Print)]]
+  TR --> CA[Change Atlas Links]
+  PS --> U[User / Clinician]
+
+```
+
+
+***
+
+## 7. Legend (Component Map)
 
 ```mermaid
 flowchart LR
